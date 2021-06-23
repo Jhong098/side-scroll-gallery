@@ -4,6 +4,7 @@ import vertex from "./shader/vertex.glsl";
 import * as dat from "dat.gui";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import t from "../img/text.png";
 
 export default class Sketch {
   constructor(options) {
@@ -82,16 +83,29 @@ export default class Sketch {
   }
 
   addObjects() {
+    let tt = new THREE.TextureLoader().load(t);
+    tt.magFilter = THREE.NearestFilter;
+    tt.minFilter = THREE.NearestFilter;
+
     this.material = new THREE.ShaderMaterial({
+      extensions: {
+        derivatives: "#extension GL_OES_standard_derivatives: enable",
+      },
       fragmentShader: fragment,
       vertexShader: vertex,
       uniforms: {
-        progress: { type: "f", value: 0 },
+        time: { type: "f", value: 0 },
+        texture1: { type: "t", value: tt },
+        resolution: { type: "v4", value: new THREE.Vector4() },
+        uvRate1: {
+          value: new THREE.Vector2(1, 1),
+        },
       },
       side: THREE.DoubleSide,
     });
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.scene.add(this.mesh);
+    this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
+    this.plane = new THREE.Mesh(this.geometry, this.material);
+    this.scene.add(this.plane);
   }
 
   stop() {
