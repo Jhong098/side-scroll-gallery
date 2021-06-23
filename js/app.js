@@ -42,6 +42,7 @@ export default class Sketch {
     this.resize();
     this.render();
     this.setupResize();
+    this.settings();
   }
 
   settings() {
@@ -95,6 +96,8 @@ export default class Sketch {
       vertexShader: vertex,
       uniforms: {
         time: { type: "f", value: 0 },
+        progress: { type: "f", value: 0 },
+
         texture1: { type: "t", value: tt },
         resolution: { type: "v4", value: new THREE.Vector4() },
         uvRate1: {
@@ -124,6 +127,8 @@ export default class Sketch {
 
     this.time += 0.05;
     this.material.uniforms.time.value = this.time;
+    this.material.uniforms.progress.value = this.settings.progress;
+
     window.requestAnimationFrame(this.render.bind(this));
     this.renderer.render(this.scene, this.camera);
   }
