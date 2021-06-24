@@ -24,11 +24,13 @@ void main() {
     float sides = 2.*length(vUv.x - 0.5);
     float masking = step(0.9, sides);
     float shade = 10.*(sides - 0.9)*masking;
-    shade = shade*shade;
+    shade = pow(shade, 5.);
 
-    newUV = (newUV - vec2(0.5, stepY - 0.1))*vec2(1. + 0.1*shade, 1. + 0.7*shade) + vec2(0.5, stepY - 0.1);
+    newUV = (newUV - vec2(0.5, stepY - 0.1))*(vec2(1. + 0.1*shade, 1. + 0.7*shade) - 0.6*(1. - progress) ) + vec2(0.5, stepY - 0.1);
 
-    newUV.x = mod(newUV.x - scroll + progress + hash1(stepY), 1.);
+    float direction = (mod(ceil(newUV.y*5.), 2.)==0.)?-1.:1.;
+
+    newUV.x = mod(newUV.x - scroll + 0.3*progress*direction + hash1(stepY), 1.);
 
     newUV = fract(newUV * 5.);
     vec4 map = texture2D(texture1, newUV);

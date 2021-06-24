@@ -125,7 +125,7 @@ export default class Sketch {
   render() {
     if (!this.isPlaying) return;
 
-    this.time += 0.05;
+    // this.time += 0.05;
     this.material.uniforms.time.value = this.time;
     this.material.uniforms.progress.value = this.settings.progress;
 
@@ -133,7 +133,3 @@ export default class Sketch {
     this.renderer.render(this.scene, this.camera);
   }
 }
-
-new Sketch({
-  dom: document.getElementById("container"),
-});
