@@ -4,7 +4,7 @@ import vertex from "./shader/vertex.glsl";
 import * as dat from "dat.gui";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import t from "../img/text.png";
+import t from "url:../img/text.png";
 
 export default class Sketch {
   constructor(options) {
